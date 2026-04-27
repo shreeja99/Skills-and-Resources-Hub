@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Campus Skill & Resource Hub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body class="bg-gradient-to-br from-indigo-100 via-purple-100 to-pink-100 min-h-screen p-4 md:p-8 flex flex-col items-center">
+
+    <!-- Main Content Area -->
+    <div class="container bg-white rounded-xl shadow-2xl p-6 md:p-10 w-full mb-8">
+
+        <header class="text-center mb-8">
+            <svg class="w-16 h-16 mx-auto mb-3 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.378 3.378 0 0012 18.348a3.378 3.378 0 00-1.06.21l-.547-.547z"></path></svg>
+             
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-2">Smart Campus Skill Hub</h1>
+            <p class="text-md md:text-lg text-gray-600">Connect, Collaborate, and Grow Your Skills.</p>
+        </header>
+
+        <!-- Initial Auth Buttons -->
+        <div id="auth-buttons" class="text-center space-x-4 mb-8">
+            <button id="show-login-btn" class="btn btn-primary">Login</button>
+            <button id="show-register-btn" class="btn btn-secondary">Register</button>
+        </div>
+
+        <!-- Welcome Message -->
+        <div id="welcome-message" class="text-center mb-6 hidden">
+             <p class="text-xl text-gray-700">Welcome back!</p>
+             <button id="logout-btn" class="text-sm text-indigo-600 hover:underline mt-1">Logout</button>
+        </div>
+
+        <!-- Profile Input Section -->
+        <div id="profile-section" class="flex justify-center hidden">
+            <div class="w-full max-w-lg space-y-5 bg-gray-50 p-6 rounded-lg border h-fit shadow-inner">
+                <h2 class="text-2xl font-semibold text-indigo-700 border-b pb-3 mb-4 text-center">Your Profile</h2>
+                <div> <label for="skills-input" class="block text-sm font-medium text-gray-700 mb-1">Skills (comma-separated):</label> <input type="text" id="skills-input" placeholder="e.g., Python, C++, Data Analysis, CAD" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-sm"> </div>
+                <div> <label for="interests-input" class="block text-sm font-medium text-gray-700 mb-1">Interests (comma-separated):</label> <input type="text" id="interests-input" placeholder="e.g., AI, Robotics, Sustainability, Design" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-sm"> </div>
+                <div> <label for="availability-select" class="block text-sm font-medium text-gray-700 mb-1">Availability (per week):</label> <select id="availability-select" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent bg-white text-sm"> <option value="0-5">0-5 hours</option> <option value="5-10">5-10 hours</option> <option value="10-15">10-15 hours</option> <option value="15+">15+ hours</option> </select> </div>
+                <button id="find-opportunities-btn" class="w-full btn btn-primary mt-4"> Find Opportunities </button>
+                <p id="error-message" class="text-red-600 italic text-center pt-2 hidden text-sm"></p>
+            </div>
+        </div>
+
+        <!-- DSA Visualization Section (Hidden Initially) -->
+        <div id="dsa-visualization-section" class="hidden">
+            <!-- Queue Visualization -->
+            <div class="dsa-container">
+                 <h3 class="dsa-title">Pending Enrollments</h3>
+                 <ul id="queue-display" class="dsa-list">
+                     <li class="dsa-list-empty">Queue is empty</li>
+                     <!-- Items will be added here -->
+                 </ul>
+            </div>
+            <!-- Stack Visualization -->
+             <div class="dsa-container">
+                 <h3 class="dsa-title">View History</h3>
+                 <ul id="stack-display" class="dsa-list">
+                      <li class="dsa-list-empty">History is empty</li>
+                     <!-- Items will be added here -->
+                 </ul>
+            </div>
+        </div>
+
+
+    </div><!-- End Main Container -->
+
+    <footer class="text-center text-gray-500 text-sm mb-4">
+        Smart Campus Skill & Resource Hub Concept
+    </footer>
+
+
+    <!-- Login Modal -->
+    <div id="login-modal-overlay" class="modal-overlay hidden">
+        <div id="login-modal-content" class="modal-content">
+            <button id="login-modal-close-button" class="modal-close-btn" aria-label="Close login form">&times;</button>
+            <h2 class="text-2xl font-semibold text-gray-800 mb-6 text-center">Login</h2>
+            <form id="login-form" class="space-y-5 auth-form">
+                 <div> <label for="login-email">Email or Username:</label> <input type="text" id="login-email" name="email" required> </div>
+                 <div> <label for="login-password">Password:</label> <input type="password" id="login-password" name="password" required> </div>
+                 <p id="login-error-message" class="text-red-500 text-sm hidden text-center"></p>
+                 <button type="submit" class="w-full btn btn-primary mt-2">Login</button>
+                 <p class="text-sm text-center text-gray-600 pt-2"> Don't have an account? <button type="button" id="switch-to-register-btn" class="text-indigo-600 hover:underline font-medium">Register here</button> </p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div id="register-modal-overlay" class="modal-overlay hidden">
+        <div id="register-modal-content" class="modal-content">
+            <button id="register-modal-close-button" class="modal-close-btn" aria-label="Close registration form">&times;</button>
+            <h2 class="text-2xl font-semibold text-gray-800 mb-6 text-center">Register</h2>
+            <form id="register-form" class="space-y-4 auth-form">
+                 <div> <label for="register-name">Full Name:</label> <input type="text" id="register-name" name="name" required> </div>
+                 <div> <label for="register-email">Email:</label> <input type="email" id="register-email" name="email" required> </div>
+                 <div> <label for="register-password">Password:</label> <input type="password" id="register-password" name="password" required> </div>
+                 <div> <label for="register-confirm-password">Confirm Password:</label> <input type="password" id="register-confirm-password" name="confirm_password" required> </div>
+                 <p id="register-error-message" class="text-red-500 text-sm hidden text-center"></p>
+                 <button type="submit" class="w-full btn btn-primary mt-2">Register</button>
+                 <p class="text-sm text-center text-gray-600 pt-2"> Already have an account? <button type="button" id="switch-to-login-btn" class="text-indigo-600 hover:underline font-medium">Login here</button> </p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Recommendations Modal -->
+    <div id="results-modal-overlay" class="modal-overlay hidden">
+        <div id="results-modal-content" class="modal-content">
+             <button id="results-modal-close-button" class="modal-close-btn" aria-label="Close recommendations">&times;</button>
+            <div id="results-container">
+                <h2 class="text-2xl font-semibold text-indigo-700 border-b pb-3 mb-5">Your Recommendations</h2>
+                <div class="border-b border-gray-200">
+                    <nav class="-mb-px flex space-x-6" aria-label="Tabs">
+                        <button id="tab-projects" data-target="panel-projects" class="tab-button active">Projects (<span id="count-projects">0</span>)</button>
+                        <button id="tab-internships" data-target="panel-internships" class="tab-button">Internships (<span id="count-internships">0</span>)</button>
+                        <button id="tab-resources" data-target="panel-resources" class="tab-button">Resources (<span id="count-resources">0</span>)</button>
+                    </nav>
+                </div>
+                <div id="tab-panels" class="mt-4">
+                    <div id="panel-projects" class="tab-panel active space-y-3"><div id="projects-list" class="space-y-4 max-h-72 overflow-y-auto p-1"></div><p id="no-projects" class="text-gray-500 italic hidden p-4 text-center">No matching projects found.</p></div>
+                    <div id="panel-internships" class="tab-panel space-y-3"><div id="internships-list" class="space-y-4 max-h-72 overflow-y-auto p-1"></div><p id="no-internships" class="text-gray-500 italic hidden p-4 text-center">No matching internships found.</p></div>
+                    <div id="panel-resources" class="tab-panel space-y-3"><div id="resources-list" class="space-y-4 max-h-72 overflow-y-auto p-1"></div><p id="no-resources" class="text-gray-500 italic hidden p-4 text-center">No matching resources found.</p></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Enrollment Modal -->
+    <div id="enroll-modal-overlay" class="modal-overlay hidden">
+        <div id="enroll-modal-content" class="modal-content">
+             <button id="enroll-modal-close-button" class="modal-close-btn" aria-label="Close enrollment form">&times;</button>
+             <h2 class="text-2xl font-semibold text-gray-800 mb-5 text-center">Enrollment / Interest Form</h2>
+             <p class="mb-5 text-gray-600 text-center">Expressing interest in: <strong id="enroll-opportunity-title" class="text-indigo-700"></strong></p>
+             <form id="enroll-form" class="space-y-4 auth-form">
+                 <div> <label for="enroll-name">Name:</label> <input type="text" id="enroll-name" name="name" required> </div>
+                 <div> <label for="enroll-email">Email:</label> <input type="email" id="enroll-email" name="email" required> </div>
+                 <div> <label for="enroll-message">Why are you interested? (Optional):</label> <textarea id="enroll-message" name="message" rows="3" class="mt-1 w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-sm"></textarea> </div>
+                 <div class="flex justify-between items-center pt-3">
+                     <button type="button" id="enroll-back-button" class="text-sm text-gray-600 hover:text-indigo-600 font-medium">&larr; Back to Recommendations</button>
+                     <button type="submit" class="btn btn-primary bg-emerald-600 hover:bg-emerald-700"> Submit Interest </button>
+                 </div>
+                  <p id="enroll-success-message" class="text-green-600 text-center font-medium hidden pt-3">Interest submitted to pending queue!</p>
+             </form>
+        </div>
+    </div>
+
+
+  <script src="script.js"></script>
+  
+</body>
+</html>
+
